@@ -1,14 +1,10 @@
 package com.dudnyk;
 
-import java.util.Scanner;
-
 public class TicTacToe {
   public static final int WIN            = 0;
   public static final int DRAW           = 1;
   public static final int AVAILABLE_TURN = 2;
   public static final int ALREADY_FILLED = 3;
-
-//  private static String[] marks = {" ", "X", "O"};
 
   private int tableSize;
   private int currentPlayer = 1;
