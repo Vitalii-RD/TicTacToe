@@ -58,14 +58,14 @@ public class TicTacToe {
     if (isStraightLine(newTable) || isStraightLine(transposeMatrix(newTable)) || isDiagonalLine(newTable)) {
       winner = currentPlayer;
       return WIN;
-    } else if (isFilledTable(table)) {
+    } else if (isFilledTable(newTable)) {
       return DRAW;
     } else {
       return AVAILABLE_TURN;
     }
   }
 
-  public void nextTurn() {
+  private void nextTurn() {
     currentPlayer = currentPlayer == 1 ? 2 : 1;
   }
 
@@ -129,24 +129,6 @@ public class TicTacToe {
   public void executeTurn(int row, int column) {
     table = setValue(row, column);
     nextTurn();
-  }
-
-  public void printTable(int[][] table) {
-    System.out.println();
-
-    for (int i = 0; i < tableSize; i++) {
-      if (i > 0) {
-        int numOfDashes = (tableSize - 1) * 3 + tableSize;
-        System.out.println("-".repeat(numOfDashes));
-      }
-      for (int j = 0; j < tableSize; j++) {
-        if (j > 0)
-          System.out.print(" | ");
-        System.out.print(marks[table[i][j]]);
-      }
-      System.out.println();
-    }
-    System.out.println();
   }
 
   private int[][] transposeMatrix(int[][] matrix) {

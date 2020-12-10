@@ -7,6 +7,7 @@ import org.junit.Test;
 
 public class TicTacToeTest {
   private TicTacToe game;
+  private IRenderable renderer =  new ConsoleRenderer();
 
   @Before
   public void setUp() {
@@ -22,23 +23,52 @@ public class TicTacToeTest {
 
   @Test
   public void WhenHorizontalLine__getState__returnsWin() {
-    game.executeTurn(1, 1);
-    game.executeTurn(1, 2);
-    game.executeTurn(1, 3);
-    int state = game.getState(1, 1);
+    // X X X
+    // Y Y -
+    // - - -
+    game.executeTurn(1, 1); // X
+    game.executeTurn(2, 1); // Y
+    game.executeTurn(1, 2); // X
+    game.executeTurn(2, 2); // Y
+    int state = game.getState(1, 3); // X
 
     Assert.assertEquals(TicTacToe.WIN, state);
+
+    game.executeTurn(1, 3); // X
+    renderer.printTable(game.getCloneTable());
+  }
+
+  @Test
+  public void WhenVerticalLine__getState__returnsWin() {
+    // X Y -
+    // X Y -
+    // X - -
+    game.executeTurn(1, 1); // X
+    game.executeTurn(1, 2); // Y
+    game.executeTurn(2, 1); // X
+    game.executeTurn(2, 2); // Y
+    int state = game.getState(3, 1); // X
+
+    Assert.assertEquals(TicTacToe.WIN, state);
+
+    game.executeTurn(3, 1); // X
+    renderer.printTable(game.getCloneTable());
   }
 
   @Test
   public void WhenDiagonalLine__getState__returnsWin() {
-    game.executeTurn(1, 1);
-    game.executeTurn(2, 2);
-    game.executeTurn(3, 3);
-
-    int state = game.getState(1, 1);
-
+    // X - Y
+    // - X Y
+    // - - X
+    game.executeTurn(1, 1); // X
+    game.executeTurn(1, 3); // Y
+    game.executeTurn(2, 2); // X
+    game.executeTurn(2, 3); // Y
+    int state = game.getState(3, 3); // X
     Assert.assertEquals(TicTacToe.WIN, state);
+
+    game.executeTurn(3, 3); // X
+    renderer.printTable(game.getCloneTable());
   }
 
   @Test
@@ -47,23 +77,25 @@ public class TicTacToeTest {
     // Y Y X
     // X X Y
 
-    //player X
-    game.executeTurn(1, 1);
-    game.executeTurn(1, 3);
-    game.executeTurn(2, 3);
-    game.executeTurn(3, 1);
-    game.executeTurn(3, 2);
+    // X Y X
+    game.executeTurn(1, 1); // X
+    game.executeTurn(1, 2); // Y
+    game.executeTurn(1, 3); // X
 
-    //player Y
-    game.nextTurn();
-    game.executeTurn(1, 2);
-    game.executeTurn(2, 1);
-    game.executeTurn(2, 2);
-    game.executeTurn(3, 3);
+    // Y Y X
+    game.executeTurn(2, 1); // Y
+    game.executeTurn(2, 3); // X
+    game.executeTurn(2, 2); // Y
 
-    int state = game.getState(1, 1);
+    // X X Y
+    game.executeTurn(3, 1); // X
+    game.executeTurn(3, 3); // Y
+    int state = game.getState(3, 2); // X
 
     Assert.assertEquals(TicTacToe.DRAW, state);
+
+    game.executeTurn(3, 2); // X
+    renderer.printTable(game.getCloneTable());
   }
 
   @Test
@@ -77,7 +109,7 @@ public class TicTacToeTest {
 
   @Test
   public void WhenInvoked__nextTurn__changes_CurrentPlayer() {
-    game.nextTurn();
+    game.executeTurn(1, 1);
 
     Assert.assertEquals("O", game.getCurrentPlayer());
   }
