@@ -7,9 +7,9 @@ public class ConsoleRenderer implements IRenderable {
   private static String[] marks = {" ", "X", "O"};
 
   @Override
-  public void showInit(String firstPlayer) {
+  public void showInit(int firstPlayer) {
     System.out.println("TIC TAC TOE");
-    System.out.println("First goes " + firstPlayer);
+    System.out.println("First goes " + marks[firstPlayer]);
   }
 
   @Override
@@ -18,13 +18,13 @@ public class ConsoleRenderer implements IRenderable {
   }
 
   @Override
-  public void showPlayer(String player) {
-    System.out.println(player + " player");
+  public void showPlayer(int player) {
+    System.out.println(marks[player] + " player");
   }
 
   @Override
-  public void showWin(String winner) {
-    System.out.println("Winner: " + winner);
+  public void showWin(int winner) {
+    System.out.println("Winner: " + (winner != 0 ? marks[winner] : "None"));
   }
 
   @Override
@@ -51,13 +51,13 @@ public class ConsoleRenderer implements IRenderable {
     }
   }
 
-  public int[] getPosition(String player, int tableSize) {
+  public int[] getPosition(int player, int tableSize) {
     boolean isValidInput = false;
     int row = 0;
     int column = 0;
 
     while (!isValidInput) {
-      System.out.print("Column and row for " + player + ": ");
+      System.out.print("Column and row for " + marks[player] + ": ");
       try {
         row = sc.nextInt();
         column = sc.nextInt();

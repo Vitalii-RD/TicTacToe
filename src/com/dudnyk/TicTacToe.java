@@ -8,9 +8,7 @@ public class TicTacToe {
   public static final int AVAILABLE_TURN = 2;
   public static final int ALREADY_FILLED = 3;
 
-  private static final Scanner sc = new Scanner(System.in);
-
-  private static String[] marks = {" ", "X", "O"};
+//  private static String[] marks = {" ", "X", "O"};
 
   private int tableSize;
   private int currentPlayer = 1;
@@ -129,12 +127,12 @@ public class TicTacToe {
     return clone;
   }
 
-  public String getCurrentPlayer() {
-    return  marks[currentPlayer];
+  public int getCurrentPlayer() {
+    return currentPlayer;
   }
 
-  public String getWinner() {
-    return winner != 0  ? marks[winner] : "None";
+  public int getWinner() {
+    return winner;
   }
 
   public int getTableSize() {
