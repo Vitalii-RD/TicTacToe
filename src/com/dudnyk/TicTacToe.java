@@ -14,6 +14,7 @@ public class TicTacToe {
 
   private int tableSize;
   private int currentPlayer = 1;
+  private int winner = 0;
   private int[][] table;
 
   public TicTacToe () {
@@ -41,19 +42,24 @@ public class TicTacToe {
 
         } else isValidInput = true;
       } catch (Exception e) {
-        System.out.println("Input should contain 2 separate digits in range [1; 3].Try again");
+        System.out.println("Input should contain 2 separate digits in range [1; 3]. Try again");
       }
     }
     return new int[] {row, column};
   }
 
   public int getState(int row , int column) {
-    if (isStraightLine(table) || isStraightLine(transposeMatrix(table)) || isDiagonalLine(table)) {
+    if (!isFree(table, row, column)) {
+      return ALREADY_FILLED;
+    }
+
+    int[][] newTable = setValue(row, column);
+
+    if (isStraightLine(newTable) || isStraightLine(transposeMatrix(newTable)) || isDiagonalLine(newTable)) {
+      winner = currentPlayer;
       return WIN;
     } else if (isFilledTable(table)) {
       return DRAW;
-    } else if (!isFree(table, row, column)) {
-      return ALREADY_FILLED;
     } else {
       return AVAILABLE_TURN;
     }
@@ -114,8 +120,15 @@ public class TicTacToe {
     return true;
   }
 
+  private int[][] setValue(int row, int column) {
+    int[][] newTable = getCloneTable();
+    newTable[row-1][column-1] = currentPlayer;
+    return newTable;
+  }
+
   public void executeTurn(int row, int column) {
-    table[row-1][column-1] = currentPlayer;
+    table = setValue(row, column);
+    nextTurn();
   }
 
   public void printTable(int[][] table) {
@@ -146,7 +159,7 @@ public class TicTacToe {
     return newMatrix;
   }
 
-  public int[][] getTable() {
+  public int[][] getCloneTable() {
     int[][] clone = new int[tableSize][tableSize];
     for (int i = 0; i < tableSize; i++) {
       for (int j = 0; j < tableSize; j++) {
@@ -157,6 +170,10 @@ public class TicTacToe {
   }
 
   public String getCurrentPlayer() {
-    return marks[currentPlayer];
+    return  marks[currentPlayer];
+  }
+
+  public String getWinner() {
+    return winner != 0  ? marks[winner] : "None";
   }
 }
