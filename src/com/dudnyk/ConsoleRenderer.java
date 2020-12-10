@@ -51,6 +51,29 @@ public class ConsoleRenderer implements IRenderable {
     }
   }
 
+  public int[] getPosition(String player, int tableSize) {
+    boolean isValidInput = false;
+    int row = 0;
+    int column = 0;
+
+    while (!isValidInput) {
+      System.out.print("Column and row for " + player + ": ");
+      try {
+        row = sc.nextInt();
+        column = sc.nextInt();
+        if ( !(0 < row && row <= tableSize) ||
+                !(0 < column && column <= tableSize) ) {
+          throw new Exception();
+
+        } else isValidInput = true;
+      } catch (Exception e) {
+        System.out.println("Input should contain 2 separate digits in range [1; 3]. Try again");
+      }
+    }
+    return new int[] {row, column};
+  }
+
+
   public void printTable(int[][] table) {
     int tableSize = table.length;
     System.out.println();

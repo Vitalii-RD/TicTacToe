@@ -8,4 +8,5 @@ public interface IRenderable {
   void showDraw();
   boolean isRestart();
   void printTable(int[][] table);
+  int[] getPosition(String player, int tableSize);
 }

@@ -26,28 +26,6 @@ public class TicTacToe {
     table = new int[tableSize][tableSize];
   }
 
-  public int[] getPosition() {
-    boolean isValidInput = false;
-    int row = 0;
-    int column = 0;
-
-    while (!isValidInput) {
-      System.out.print("Column and row for " + marks[currentPlayer] + ": ");
-      try {
-        row = sc.nextInt();
-        column = sc.nextInt();
-        if ( !(0 < row && row <= tableSize) ||
-                !(0 < column && column <= tableSize) ) {
-          throw new Exception();
-
-        } else isValidInput = true;
-      } catch (Exception e) {
-        System.out.println("Input should contain 2 separate digits in range [1; 3]. Try again");
-      }
-    }
-    return new int[] {row, column};
-  }
-
   public int getState(int row , int column) {
     if (!isFree(table, row, column)) {
       return ALREADY_FILLED;
@@ -157,5 +135,9 @@ public class TicTacToe {
 
   public String getWinner() {
     return winner != 0  ? marks[winner] : "None";
+  }
+
+  public int getTableSize() {
+    return tableSize;
   }
 }

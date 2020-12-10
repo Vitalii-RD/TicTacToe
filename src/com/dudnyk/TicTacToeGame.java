@@ -18,7 +18,7 @@ public class TicTacToeGame {
     boolean isPlaying = true;
 
     while (isPlaying){
-      int[] position = ticTacToe.getPosition();
+      int[] position = renderer.getPosition(ticTacToe.getCurrentPlayer(), ticTacToe.getTableSize());
       int state = ticTacToe.getState(position[0], position[1]);
 
       if (state == TicTacToe.ALREADY_FILLED) {
