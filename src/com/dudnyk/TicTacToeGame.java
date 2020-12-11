@@ -4,7 +4,6 @@ import java.util.Scanner;
 
 public class TicTacToeGame {
 
-  private static final Scanner sc = new Scanner(System.in);
   private TicTacToe ticTacToe;
   private IRenderable renderer;
 

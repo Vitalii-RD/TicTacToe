@@ -111,12 +111,12 @@ public class TicTacToeTest {
   public void WhenInvoked__nextTurn__changes_CurrentPlayer() {
     game.executeTurn(1, 1);
 
-    Assert.assertEquals("O", game.getCurrentPlayer());
+    Assert.assertEquals(2, game.getCurrentPlayer());
   }
 
   @Test
   public void WhenFirstInvoked__getCurrentPlayer__returns_X() {
-    Assert.assertEquals("X", game.getCurrentPlayer());
+    Assert.assertEquals(1, game.getCurrentPlayer());
   }
 
   @After

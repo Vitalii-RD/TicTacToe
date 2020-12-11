@@ -3,6 +3,7 @@ package com.dudnyk;
 import java.util.Scanner;
 
 public class ConsoleRenderer implements IRenderable {
+
   private static Scanner sc = new Scanner(System.in);
   private static String[] marks = {" ", "X", "O"};
 
