@@ -1,7 +1,5 @@
 package com.dudnyk;
 
-import java.util.Scanner;
-
 public class TicTacToeGame {
 
   private TicTacToe ticTacToe;
@@ -31,9 +29,7 @@ public class TicTacToeGame {
       if (state == TicTacToe.AVAILABLE_TURN) {
         renderer.showPlayer(ticTacToe.getCurrentPlayer());
         continue;
-      }
-
-      if (state == TicTacToe.WIN) {
+      } else if (state == TicTacToe.WIN) {
         renderer.showWin(ticTacToe.getWinner());
       } else if (state == TicTacToe.DRAW) {
         renderer.showDraw();

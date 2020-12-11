@@ -20,23 +20,6 @@ public class TicTacToe {
     table = new int[tableSize][tableSize];
   }
 
-  public int getState(int row , int column) {
-    if (!isFree(table, row, column)) {
-      return ALREADY_FILLED;
-    }
-
-    int[][] newTable = setValue(row, column);
-
-    if (isStraightLine(newTable) || isStraightLine(transposeMatrix(newTable)) || isDiagonalLine(newTable)) {
-      winner = currentPlayer;
-      return WIN;
-    } else if (isFilledTable(newTable)) {
-      return DRAW;
-    } else {
-      return AVAILABLE_TURN;
-    }
-  }
-
   private void nextTurn() {
     currentPlayer = currentPlayer == 1 ? 2 : 1;
   }
@@ -92,12 +75,6 @@ public class TicTacToe {
     return true;
   }
 
-  private int[][] setValue(int row, int column) {
-    int[][] newTable = getCloneTable();
-    newTable[row-1][column-1] = currentPlayer;
-    return newTable;
-  }
-
   public void executeTurn(int row, int column) {
     table = setValue(row, column);
     nextTurn();
@@ -113,6 +90,12 @@ public class TicTacToe {
     return newMatrix;
   }
 
+  private int[][] setValue(int row, int column) {
+    int[][] newTable = getCloneTable();
+    newTable[row-1][column-1] = currentPlayer;
+    return newTable;
+  }
+
   public int[][] getCloneTable() {
     int[][] clone = new int[tableSize][tableSize];
     for (int i = 0; i < tableSize; i++) {
@@ -121,6 +104,23 @@ public class TicTacToe {
       }
     }
     return clone;
+  }
+
+  public int getState(int row , int column) {
+    if (!isFree(table, row, column)) {
+      return ALREADY_FILLED;
+    }
+
+    int[][] newTable = setValue(row, column);
+
+    if (isStraightLine(newTable) || isStraightLine(transposeMatrix(newTable)) || isDiagonalLine(newTable)) {
+      winner = currentPlayer;
+      return WIN;
+    } else if (isFilledTable(newTable)) {
+      return DRAW;
+    } else {
+      return AVAILABLE_TURN;
+    }
   }
 
   public int getCurrentPlayer() {
