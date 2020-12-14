@@ -52,6 +52,7 @@ public class ConsoleRenderer implements IRender {
     }
   }
 
+  @Override
   public int[] getPosition(Marks player, int tableSize) {
     boolean isValidInput = false;
     int row = 0;
@@ -74,7 +75,7 @@ public class ConsoleRenderer implements IRender {
     return new int[] {row-1, column-1};
   }
 
-
+  @Override
   public void printTable(Marks[][] table) {
     int tableSize = table.length;
     System.out.println();
