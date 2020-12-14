@@ -30,9 +30,6 @@ public class TicTacToe {
     return table;
   }
 
-  Marks[][] get() {
-    return table;
-  }
   private void nextTurn() {
     currentPlayer = currentPlayer == Marks.player1 ? Marks.player2 : Marks.player1;
   }

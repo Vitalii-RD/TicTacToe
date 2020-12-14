@@ -3,9 +3,9 @@ package com.dudnyk;
 public class TicTacToeGame {
 
   private TicTacToe ticTacToe;
-  private IRenderable renderer;
+  private IRender renderer;
 
-  public TicTacToeGame(IRenderable renderer) {
+  public TicTacToeGame(IRender renderer) {
       this.ticTacToe = new TicTacToe();
       this.renderer = renderer;
   }
