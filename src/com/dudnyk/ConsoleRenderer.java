@@ -35,7 +35,7 @@ public class ConsoleRenderer implements IRender {
 
   @Override
   public boolean isRestart() {
-    System.out.println("+ - restart");
+    System.out.println("+ restart");
     System.out.println("- finish");
 
     while (true) {
