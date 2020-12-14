@@ -94,7 +94,7 @@ public class TicTacToe {
 
   private Marks[][] setValue(int row, int column) {
     Marks[][] newTable = getCloneTable();
-    newTable[row-1][column-1] = currentPlayer;
+    newTable[row][column] = currentPlayer;
     return newTable;
   }
 
