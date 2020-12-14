@@ -2,15 +2,15 @@ package com.dudnyk;
 
 import java.util.Scanner;
 
-public class ConsoleRenderer implements IRenderable {
+public class ConsoleRenderer implements IRender {
 
   private static Scanner sc = new Scanner(System.in);
-  private static String[] marks = {" ", "X", "O"};
+  private static String[] view = {" ", "X", "O"};
 
   @Override
-  public void showInit(int firstPlayer) {
+  public void showInit(Marks firstPlayer) {
     System.out.println("TIC TAC TOE");
-    System.out.println("First goes " + marks[firstPlayer]);
+    System.out.println("First goes " + view[firstPlayer.ordinal()]);
   }
 
   @Override
@@ -19,13 +19,13 @@ public class ConsoleRenderer implements IRenderable {
   }
 
   @Override
-  public void showPlayer(int player) {
-    System.out.println(marks[player] + " player");
+  public void showPlayer(Marks player) {
+    System.out.println(view[player.ordinal()] + " player");
   }
 
   @Override
-  public void showWin(int winner) {
-    System.out.println("Winner: " + (winner != 0 ? marks[winner] : "None"));
+  public void showWin(Marks winner) {
+    System.out.println("Winner: " + (winner != Marks.empty ? view[winner.ordinal()] : "None"));
   }
 
   @Override
@@ -52,13 +52,13 @@ public class ConsoleRenderer implements IRenderable {
     }
   }
 
-  public int[] getPosition(int player, int tableSize) {
+  public int[] getPosition(Marks player, int tableSize) {
     boolean isValidInput = false;
     int row = 0;
     int column = 0;
 
     while (!isValidInput) {
-      System.out.print("Column and row for " + marks[player] + ": ");
+      System.out.print("Column and row for " + view[player.ordinal()] + ": ");
       try {
         row = sc.nextInt();
         column = sc.nextInt();
@@ -71,11 +71,11 @@ public class ConsoleRenderer implements IRenderable {
         System.out.println("Input should contain 2 separate digits in range [1; 3]. Try again");
       }
     }
-    return new int[] {row, column};
+    return new int[] {row-1, column-1};
   }
 
 
-  public void printTable(int[][] table) {
+  public void printTable(Marks[][] table) {
     int tableSize = table.length;
     System.out.println();
 
@@ -87,10 +87,11 @@ public class ConsoleRenderer implements IRenderable {
       for (int j = 0; j < tableSize; j++) {
         if (j > 0)
           System.out.print(" | ");
-        System.out.print(marks[table[i][j]]);
+        System.out.print(view[table[i][j].ordinal()]);
       }
       System.out.println();
     }
+
     System.out.println();
   }
 }
