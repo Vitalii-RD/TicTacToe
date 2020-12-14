@@ -1,5 +1,7 @@
 package com.dudnyk;
 
+import java.util.Arrays;
+
 public class TicTacToe {
   public static final int WIN            = 0;
   public static final int DRAW           = 1;
@@ -7,9 +9,9 @@ public class TicTacToe {
   public static final int ALREADY_FILLED = 3;
 
   private int tableSize;
-  private int currentPlayer = 1;
-  private int winner = 0;
-  private int[][] table;
+  private Marks currentPlayer = Marks.player1;
+  private Marks winner = Marks.empty;
+  private Marks[][] table;
 
   public TicTacToe () {
     this(3);
@@ -17,18 +19,25 @@ public class TicTacToe {
 
   public TicTacToe (int size) {
     tableSize = size;
-    table = new int[tableSize][tableSize];
+    table = initTable(tableSize, Marks.empty);
   }
 
+  private Marks[][] initTable(int size, Marks value) {
+    Marks[][] table = new Marks[size][size];
+    for(int i =0; i < size; i++) {
+      Arrays.fill(table[i], value);
+    }
+    return table;
+  }
+
+  Marks[][] get() {
+    return table;
+  }
   private void nextTurn() {
-    currentPlayer = currentPlayer == 1 ? 2 : 1;
+    currentPlayer = currentPlayer == Marks.player1 ? Marks.player2 : Marks.player1;
   }
 
-  public boolean isFree(int[][] table, int row, int column) {
-    return table[row-1][column-1] == 0;
-  }
-
-  public boolean isStraightLine(int[][] table) {
+  public boolean isStraightLine(Marks[][] table) {
     boolean isLine = false;
 
     for (int i = 0; i < tableSize; i++) {
@@ -44,7 +53,7 @@ public class TicTacToe {
     return isLine;
   }
 
-  public boolean isDiagonalLine(int[][] table) {
+  public boolean isDiagonalLine(Marks[][] table) {
     boolean isLine = false;
     int[][] startPoints = {{0, 0}, {tableSize-1, 0}};
     int[][] coefficients = {{1,1}, {-1, 1}};
@@ -52,7 +61,6 @@ public class TicTacToe {
     for (int i = 0; i < startPoints.length; i++) {
       isLine = true;
       for (int j = 0; j < tableSize; j++) {
-
         int row = startPoints[i][0] + coefficients[i][0] * j;
         int column = startPoints[i][1] + coefficients[i][1] * j;
 
@@ -66,10 +74,14 @@ public class TicTacToe {
     return isLine;
   }
 
-  public boolean isFilledTable(int[][] table) {
+  public boolean isFree(Marks[][] table, int row, int column) {
+    return table[row][column] == Marks.empty;
+  }
+
+  public boolean isFilledTable(Marks[][] table) {
     for(int i = 0; i < tableSize ; i++) {
       for (int j = 0; j < tableSize ; j++) {
-        if (table[i][j] == 0) return false;
+        if (isFree(table, i, j)) return false;
       }
     }
     return true;
@@ -80,8 +92,14 @@ public class TicTacToe {
     nextTurn();
   }
 
-  private int[][] transposeMatrix(int[][] matrix) {
-    int[][] newMatrix = new int[tableSize][tableSize];
+  private Marks[][] setValue(int row, int column) {
+    Marks[][] newTable = getCloneTable();
+    newTable[row-1][column-1] = currentPlayer;
+    return newTable;
+  }
+
+  private Marks[][] transposeMatrix(Marks[][] matrix) {
+    Marks[][] newMatrix = new Marks[tableSize][tableSize];
     for (int i = 0; i < tableSize; i++) {
       for (int j = 0; j < tableSize; j++) {
         newMatrix[j][i] = matrix[i][j];
@@ -90,14 +108,8 @@ public class TicTacToe {
     return newMatrix;
   }
 
-  private int[][] setValue(int row, int column) {
-    int[][] newTable = getCloneTable();
-    newTable[row-1][column-1] = currentPlayer;
-    return newTable;
-  }
-
-  public int[][] getCloneTable() {
-    int[][] clone = new int[tableSize][tableSize];
+  public Marks[][] getCloneTable() {
+    Marks[][] clone = new Marks[tableSize][tableSize];
     for (int i = 0; i < tableSize; i++) {
       for (int j = 0; j < tableSize; j++) {
         clone[j][i] = table[j][i];
@@ -106,12 +118,12 @@ public class TicTacToe {
     return clone;
   }
 
+
   public int getState(int row , int column) {
     if (!isFree(table, row, column)) {
       return ALREADY_FILLED;
     }
-
-    int[][] newTable = setValue(row, column);
+    Marks[][] newTable = setValue(row, column);
 
     if (isStraightLine(newTable) || isStraightLine(transposeMatrix(newTable)) || isDiagonalLine(newTable)) {
       winner = currentPlayer;
@@ -123,11 +135,11 @@ public class TicTacToe {
     }
   }
 
-  public int getCurrentPlayer() {
+  public Marks getCurrentPlayer() {
     return currentPlayer;
   }
 
-  public int getWinner() {
+  public Marks getWinner() {
     return winner;
   }
 
