@@ -5,12 +5,23 @@ import java.util.Scanner;
 public class ConsoleRenderer implements IRender {
 
   private static Scanner sc = new Scanner(System.in);
-  private static String[] view = {" ", "X", "O"};
+  private String[] views;
+
+  public ConsoleRenderer() {
+    views =  new String[] {" ", "X", "O"};
+  }
+
+  public ConsoleRenderer(String[] views) {
+    this();
+    if (views.length > 2) {
+      this.views = views;
+    }
+  }
 
   @Override
   public void showInit(Marks firstPlayer) {
     System.out.println("TIC TAC TOE");
-    System.out.println("First goes " + view[firstPlayer.ordinal()]);
+    System.out.println("First goes " + views[firstPlayer.ordinal()]);
   }
 
   @Override
@@ -20,12 +31,12 @@ public class ConsoleRenderer implements IRender {
 
   @Override
   public void showPlayer(Marks player) {
-    System.out.println(view[player.ordinal()] + " player");
+    System.out.println(views[player.ordinal()] + " player");
   }
 
   @Override
   public void showWin(Marks winner) {
-    System.out.println("Winner: " + (winner != Marks.empty ? view[winner.ordinal()] : "None"));
+    System.out.println("Winner: " + (winner != Marks.empty ? views[winner.ordinal()] : "None"));
   }
 
   @Override
@@ -59,7 +70,7 @@ public class ConsoleRenderer implements IRender {
     int column = 0;
 
     while (!isValidInput) {
-      System.out.print("Column and row for " + view[player.ordinal()] + ": ");
+      System.out.print("Column and row for " + views[player.ordinal()] + ": ");
       try {
         row = sc.nextInt();
         column = sc.nextInt();
@@ -88,7 +99,7 @@ public class ConsoleRenderer implements IRender {
       for (int j = 0; j < tableSize; j++) {
         if (j > 0)
           System.out.print(" | ");
-        System.out.print(view[table[i][j].ordinal()]);
+        System.out.print(views[table[i][j].ordinal()]);
       }
       System.out.println();
     }
