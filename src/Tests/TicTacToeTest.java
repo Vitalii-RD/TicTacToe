@@ -1,5 +1,9 @@
-package com.dudnyk;
+package Tests;
 
+import com.dudnyk.ConsoleRenderer;
+import com.dudnyk.IRender;
+import com.dudnyk.Marks;
+import com.dudnyk.TicTacToe;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
